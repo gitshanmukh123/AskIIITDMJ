@@ -45,28 +45,28 @@ The project is split into a React/Vite frontend and an Express/MongoDB backend w
 
 ```txt
 camper/
-├── backend/
-│   ├── config/          # Database, Cloudinary, prompt, and token helpers
-│   ├── controllers/     # Route handlers for auth, notes, items, chat, credits, interviews
-│   ├── middlewares/     # Auth and upload middleware
-│   ├── models/          # Mongoose schemas
-│   ├── routes/          # Express route modules
-│   ├── services/        # AI provider service wrappers
-│   ├── index.js         # Backend entry point
-│   └── socket.js        # Socket.IO server setup
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/      # Images, videos, and icons
-│   │   ├── components/  # Shared UI components
-│   │   ├── config/      # API base URL config
-│   │   ├── context/     # Theme context
-│   │   ├── pages/       # App pages and routes
-│   │   ├── redux/       # Redux slices and store
-│   │   ├── servers/     # Axios API helpers
-│   │   └── utils/       # Firebase setup
-│   └── vite.config.js
-└── README.md
+|-- backend/
+|   |-- config/          # Database, Cloudinary, prompt, and token helpers
+|   |-- controllers/     # Route handlers for auth, notes, items, chat, credits, interviews
+|   |-- middlewares/     # Auth and upload middleware
+|   |-- models/          # Mongoose schemas
+|   |-- routes/          # Express route modules
+|   |-- services/        # AI provider service wrappers
+|   |-- index.js         # Backend entry point
+|   `-- socket.js        # Socket.IO server setup
+|-- frontend/
+|   |-- public/
+|   |-- src/
+|   |   |-- assets/      # Images, videos, and icons
+|   |   |-- components/  # Shared UI components
+|   |   |-- config/      # API base URL config
+|   |   |-- context/     # Theme context
+|   |   |-- pages/       # App pages and routes
+|   |   |-- redux/       # Redux slices and store
+|   |   |-- servers/     # Axios API helpers
+|   |   `-- utils/       # Firebase setup
+|   `-- vite.config.js
+`-- README.md
 ```
 
 ## Getting Started
@@ -91,37 +91,7 @@ cd ../frontend
 npm install
 ```
 
-### 2. Configure Backend Environment
 
-Create `backend/.env`:
-
-```env
-PORT=4000
-CLIENT_URL=http://localhost:5173
-
-MONGOSE_URL=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-
-CLOUD_NAME=your_cloudinary_cloud_name
-CLOUD_API_KEY=your_cloudinary_api_key
-CLOUD_API_SECRET=your_cloudinary_api_secret
-
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
-
-GEMINI_API_KEY=your_gemini_api_key
-OPENROUTER_API_KEY=your_openrouter_api_key
-```
-
-Note: the code currently reads `MONGOSE_URL`, so keep that exact spelling unless you also rename it in `backend/config/DB.js`.
-
-### 3. Configure Frontend Environment
-
-Create `frontend/.env`:
-
-```env
-VITE_API_URL=http://localhost:4000
-VITE_API_KEY=your_firebase_web_api_key
 ```
 
 Firebase project details are configured in `frontend/src/utils/firebase.js`; update that file if you use a different Firebase project.
