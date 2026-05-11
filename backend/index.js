@@ -25,7 +25,8 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173",
   process.env.CLIENT_URL,
-  "https://campus-sync-gamma.vercel.app",
+  "https://ask-iiitdmj.vercel.app",
+  "https://ask-iiitdmj-jsal2xics-shanmukhs-projects-133c54ba.vercel.app",
 ];
 
 app.use(cors({

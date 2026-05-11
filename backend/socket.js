@@ -8,8 +8,8 @@ const server = http.createServer(app);
 const allowedOrigins = [
   process.env.CLIENT_URL,
   "http://localhost:5173",
-  "https://campus-sync-gamma.vercel.app",
-  "https://campus-6p6zc6860-pranshuchauhan149-gmailcoms-projects.vercel.app",
+  "https://ask-iiitdmj.vercel.app",
+  "https://ask-iiitdmj-jsal2xics-shanmukhs-projects-133c54ba.vercel.app",
 ];
 
 const io = new Server(server, {
