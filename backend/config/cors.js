@@ -4,7 +4,7 @@ const baseAllowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "https://ask-iiitdmj.vercel.app",
-  "https://ask-iiitdmj-jsal2xics-shanmukhs-projects-133c54ba.vercel.app",
+  "https://ask-iiitdmj-396x9embc-shanmukhs-projects-133c54ba.vercel.app",
 ];
 
 const envAllowedOrigins = [
