@@ -1,20 +1,21 @@
 import http from "http";
 import express from "express";
 import { Server } from "socket.io";
+import { isAllowedOrigin } from "./config/cors.js";
 
 const app = express();
 const server = http.createServer(app);
 
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  "http://localhost:5173",
-  "https://ask-iiitdmj.vercel.app",
-  "https://ask-iiitdmj-jsal2xics-shanmukhs-projects-133c54ba.vercel.app",
-];
-
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin(origin, callback) {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error("Not allowed by CORS"));
+    },
     methods: ["GET", "POST"],
     credentials: true,
   },

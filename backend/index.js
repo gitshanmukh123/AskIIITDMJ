@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import express, { application } from "express"
+import express from "express"
 import connectDb from "./config/DB.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -13,6 +13,7 @@ import marketplaceRouter from "./routes/MarketRoues.js";
 import { app, server } from './socket.js';
 import messageRouter from './routes/messageRoutes.js';
 import interviewRouter from './routes/interviewRoute.js';
+import { corsOptions } from "./config/cors.js";
 
 // IMPORTANT: Stripe webhook must use raw body and be declared
 // before express.json()/urlencoded() middleware.
@@ -22,25 +23,7 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(cookieParser());
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  process.env.CLIENT_URL,
-  "https://ask-iiitdmj.vercel.app",
-  "https://ask-iiitdmj-jsal2xics-shanmukhs-projects-133c54ba.vercel.app",
-];
-
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-}));
+app.use(cors(corsOptions));
 
 app.get("/",(req,res)=>{
     res.send("server is running... ")
