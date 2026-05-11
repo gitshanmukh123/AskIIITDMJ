@@ -9,7 +9,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import LostAndFound from "./pages/LostAndFound";
 import { useEffect } from "react";
-import {  getCurrentuser } from "./servers/api";
+import {  getCurrentuser } from "./servers/api.js";
 import { useDispatch, useSelector } from "react-redux";
 import StudyHome from "./pages/StudyHome";
 import Contact from "./pages/Contact";
