@@ -13,7 +13,9 @@ import marketplaceRouter from "./routes/MarketRoues.js";
 import { app, server } from './socket.js';
 import messageRouter from './routes/messageRoutes.js';
 import interviewRouter from './routes/interviewRoute.js';
-import { corsOptions } from "./config/cors.js";
+import corsMiddleware from "./config/cors.js";
+
+
 
 // IMPORTANT: Stripe webhook must use raw body and be declared
 // before express.json()/urlencoded() middleware.
@@ -23,7 +25,7 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(cookieParser());
 
-app.use(cors(corsOptions));
+app.use(corsMiddleware);
 
 app.get("/",(req,res)=>{
     res.send("server is running... ")
