@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { Users, Search, MessageCircle } from "lucide-react"
 import { useTheme } from "../context/ThemeContext"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchConversationUsers, fetchAllUsers } from "../servers/api"
+import { fetchConversationUsers, fetchAllUsers } from "../servers/api.js"
 import { setSelectedUser } from "../redux/messageSlice"
 
 const MessageSideBar = () => {

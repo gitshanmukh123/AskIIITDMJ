@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchMyClaims } from "../servers/api"
+import { fetchMyClaims } from "../servers/api.js"
 import { motion } from "framer-motion"
 import {
   CalendarDays,

@@ -21,7 +21,7 @@ import { serverUrl } from "../main";
 import toast from "react-hot-toast";
 import { setUserData } from "../redux/userSlice";
 import { useTheme } from "../context/ThemeContext";
-import { fetchItems, fetchExchangeItems } from "../servers/api";
+import { fetchItems, fetchExchangeItems } from "../servers/api.js";
 
 const notifications = [
   {

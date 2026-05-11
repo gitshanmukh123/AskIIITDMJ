@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { fetchItems, deleteItem, updateItem } from "../servers/api"
+import { fetchItems, deleteItem, updateItem } from "../servers/api.js"
 import { useNavigate } from "react-router-dom"
 import { useTheme } from "../context/ThemeContext"
 

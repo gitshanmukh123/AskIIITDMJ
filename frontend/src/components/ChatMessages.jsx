@@ -5,7 +5,7 @@ import EmojiPicker from "emoji-picker-react";
 import axios from "axios";
 import { serverUrl } from "../main";
 import { setMessages, setSelectedUser } from "../redux/messageSlice";
-import { fetchMessages, fetchConversationUsers } from "../servers/api";
+import { fetchMessages, fetchConversationUsers } from "../servers/api.js";
 import SenderMessage from "./SenderMessage";
 import ReceiverMessage from "./ReceiverMessage";
 import { useTheme } from "../context/ThemeContext";

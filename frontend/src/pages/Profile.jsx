@@ -8,7 +8,7 @@ import {
   deleteProfileImage,
   fetchExchangeItems,
   fetchItems,
-} from "../servers/api"
+} from "../servers/api.js"
 import { useTheme } from "../context/ThemeContext"
 
 const Profile = () => {

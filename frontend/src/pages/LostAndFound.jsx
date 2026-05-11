@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { MapPin, CalendarDays, User, CheckCircle } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { fetchItems } from "../servers/api"
+import { fetchItems } from "../servers/api.js"
 import { useTheme } from "../context/ThemeContext"
 
 const LostAndFound = () => {

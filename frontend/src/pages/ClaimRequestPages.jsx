@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { CalendarDays, MapPin, User, BadgeCheck, FileText } from "lucide-react"
 import toast from "react-hot-toast"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchClaimRequests } from "../servers/api"
+import { fetchClaimRequests } from "../servers/api.js"
 import { useTheme } from "../context/ThemeContext"
 
 const ClaimRequestPages = () => {

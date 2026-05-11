@@ -4,7 +4,7 @@ import {
   fetchExchangeItems,
   deleteExchangeItem,
   updateExchangeItem,
-} from "../servers/api"
+} from "../servers/api.js"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Pencil, Trash2, Eye, Plus } from "lucide-react"

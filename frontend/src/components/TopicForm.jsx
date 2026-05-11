@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Sparkles } from "lucide-react"
-import { generateNotes } from "../servers/api"
+import { generateNotes } from "../servers/api.js"
 import { useDispatch } from "react-redux"
 import { updateCreadits } from "../redux/userSlice"
 import { useTheme } from "../context/ThemeContext"

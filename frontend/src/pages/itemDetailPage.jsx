@@ -15,7 +15,7 @@ import {
   FileSearch,
   Phone,
 } from "lucide-react"
-import { fetchItems } from "../servers/api"
+import { fetchItems } from "../servers/api.js"
 import { useTheme } from "../context/ThemeContext"
 import { setSelectedUser } from "../redux/messageSlice"
 

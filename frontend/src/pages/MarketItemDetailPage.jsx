@@ -15,7 +15,7 @@ import {
   MessageCircle,
   Phone,
 } from "lucide-react"
-import { fetchExchangeItemById } from "../servers/api"
+import { fetchExchangeItemById } from "../servers/api.js"
 import toast from "react-hot-toast"
 import { useTheme } from "../context/ThemeContext"
 import { useSelector, useDispatch } from "react-redux"

@@ -9,7 +9,7 @@ import {
   Plus,
 } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchExchangeItems } from "../servers/api"
+import { fetchExchangeItems } from "../servers/api.js"
 import { Link, useNavigate } from "react-router-dom"
 import { useTheme } from "../context/ThemeContext"
 
