@@ -8,12 +8,11 @@ import CreditRouter from "./routes/creditsRoutes.js";
 import { stripeWebhook } from "./controllers/credits.controllers.js";
 import itemRouter from "./routes/itemRoutes.js";
 import marketplaceRouter from "./routes/MarketRoues.js";
-
-import { app, server } from './socket.js';
 import messageRouter from './routes/messageRoutes.js';
 import interviewRouter from './routes/interviewRoute.js';
 import corsMiddleware from "./config/cors.js";
 
+const app = express();
 
 // CORS FIRST
 app.use(corsMiddleware);
@@ -35,8 +34,6 @@ app.get("/", (req, res) => {
   res.send("server is running...");
 });
 
-const PORT = process.env.PORT;
-
 // Routes
 app.use("/api/user", userRouter);
 app.use("/api/notes", notesRouter);
@@ -45,5 +42,7 @@ app.use("/api/item", itemRouter);
 app.use("/api/marketplace", marketplaceRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/interview", interviewRouter);
+
+connectDb();
 
 export default app;
