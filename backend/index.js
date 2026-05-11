@@ -46,7 +46,4 @@ app.use("/api/marketplace", marketplaceRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/interview", interviewRouter);
 
-server.listen(PORT, () => {
-  connectDb();
-  console.log(`server is running on this PORT ${PORT}`);
-});
+export default app;
