@@ -15,33 +15,38 @@ import interviewRouter from './routes/interviewRoute.js';
 import corsMiddleware from "./config/cors.js";
 
 
+// CORS FIRST
+app.use(corsMiddleware);
+app.options("*", corsMiddleware);
 
-// IMPORTANT: Stripe webhook must use raw body and be declared
-// before express.json()/urlencoded() middleware.
-app.post("/api/credits/webhook", express.raw({ type: "application/json" }), stripeWebhook)
+// Stripe webhook
+app.post(
+  "/api/credits/webhook",
+  express.raw({ type: "application/json" }),
+  stripeWebhook
+);
 
+// Body parsers
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(cookieParser());
 
-app.use(corsMiddleware);
-
-app.get("/",(req,res)=>{
-    res.send("server is running... ")
-})
+app.get("/", (req, res) => {
+  res.send("server is running...");
+});
 
 const PORT = process.env.PORT;
 
-app.use("/api/user",userRouter);
-app.use("/api/notes",notesRouter);
-app.use("/api/credits",CreditRouter);
-app.use("/api/item",itemRouter);
-app.use("/api/marketplace",marketplaceRouter);
-app.use("/api/message",messageRouter);
-app.use("/api/interview",interviewRouter)
+// Routes
+app.use("/api/user", userRouter);
+app.use("/api/notes", notesRouter);
+app.use("/api/credits", CreditRouter);
+app.use("/api/item", itemRouter);
+app.use("/api/marketplace", marketplaceRouter);
+app.use("/api/message", messageRouter);
+app.use("/api/interview", interviewRouter);
 
-
-server.listen(PORT , ()=>{
-    connectDb();
-    console.log(`server is running on this PORT ${PORT}`);
-})
+server.listen(PORT, () => {
+  connectDb();
+  console.log(`server is running on this PORT ${PORT}`);
+});
