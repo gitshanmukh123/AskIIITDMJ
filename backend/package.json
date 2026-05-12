@@ -25,6 +25,7 @@
     "nodemon": "^3.1.11",
     "pdfjs-dist": "^5.5.207",
     "socket.io": "^4.8.3",
+    "streamifier": "^0.1.1",
     "stripe": "^20.3.1"
   }
 }

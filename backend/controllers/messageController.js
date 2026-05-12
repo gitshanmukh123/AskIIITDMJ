@@ -17,7 +17,7 @@ export const sendMessage = async (req ,res)=>{
  let image = "";
     if (req.file) {
     
-        image = await uploadOnCloudinary(req.file.path);
+        image = await uploadOnCloudinary(req.file);
     }
 
     let conversation = await Conversation.findOne({

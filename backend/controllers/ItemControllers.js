@@ -28,7 +28,7 @@ export const createItem = async (req, res) => {
     if (req.file) {
       try {
         console.log("[CREATE_ITEM] Starting image upload...");
-        const uploadedUrl = await uploadOnCloudinary(req.file.path);
+        const uploadedUrl = await uploadOnCloudinary(req.file);
         if (uploadedUrl) {
           images.push(uploadedUrl);
           console.log("[CREATE_ITEM] Image uploaded successfully:", uploadedUrl);
@@ -80,7 +80,7 @@ export const updateItem = async (req, res) => {
 
     if (req.file) {
       try {
-        const uploadedUrl = await uploadOnCloudinary(req.file.path);
+        const uploadedUrl = await uploadOnCloudinary(req.file);
         if (uploadedUrl) item.images.push(uploadedUrl);
       } catch (uploadError) {
         console.error("Upload error:", uploadError);

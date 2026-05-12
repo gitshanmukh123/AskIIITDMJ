@@ -1,22 +1,10 @@
 import { v2 as cloudinary } from "cloudinary";
-import fs from "fs";
-import path from "path";
 import dotenv from "dotenv";
+import streamifier from "streamifier";
 
 dotenv.config();
 
-// Ensure public directory exists (non-blocking for serverless environments)
-const publicDir = path.join(process.cwd(), "public");
-if (!fs.existsSync(publicDir)) {
-  try {
-    fs.mkdirSync(publicDir, { recursive: true });
-    console.log("Created /public directory for multer temp storage");
-  } catch (err) {
-    console.warn("Could not create /public directory (likely serverless environment):", err.message);
-  }
-}
-
-// Configure Cloudinary
+// Cloudinary configuration
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -24,49 +12,44 @@ cloudinary.config({
 });
 
 /**
- * Upload file to Cloudinary from file path
- * @param {string} filePath - Path to the file to upload
- * @returns {Promise<string>} - Returns secure_url of uploaded file
- * @throws {Error} - Throws error if upload fails
+ * Upload buffer/file to Cloudinary
+ * Works perfectly on Vercel serverless
  */
-const uploadOnCloudinary = async (filePath) => {
+const uploadOnCloudinary = async (file) => {
   try {
-    console.log("[UPLOAD] Starting upload for:", filePath);
-    
-    if (!filePath) {
-      throw new Error("File path is required");
+    if (!file) {
+      throw new Error("File is required");
     }
 
-    if (!fs.existsSync(filePath)) {
-      throw new Error(`File not found at path: ${filePath}`);
+    // MEMORY STORAGE CASE (Vercel Production)
+    if (file.buffer) {
+      return await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            resource_type: "auto",
+          },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result.secure_url);
+            }
+          }
+        );
+
+        streamifier.createReadStream(file.buffer).pipe(stream);
+      });
     }
 
-    console.log("[UPLOAD] File validated, uploading to Cloudinary...");
-    
-    const uploadResult = await cloudinary.uploader.upload(filePath, {
+    // LOCAL DEVELOPMENT (diskStorage)
+    const result = await cloudinary.uploader.upload(file.path, {
       resource_type: "auto",
     });
 
-    console.log("[UPLOAD] Success! URL:", uploadResult.secure_url);
+    return result.secure_url;
 
-    // Delete temp file after successful upload
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-      console.log("[UPLOAD] Temp file deleted:", filePath);
-    }
-
-    return uploadResult.secure_url;
   } catch (error) {
-    console.error("[UPLOAD] Cloudinary upload error:", error.message);
-    // Delete temp file even on error
-    try {
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        console.log("[UPLOAD] Temp file deleted on error:", filePath);
-      }
-    } catch (deleteError) {
-      console.error("[UPLOAD] Error deleting temp file:", deleteError.message);
-    }
+    console.error("Cloudinary Upload Error:", error.message);
     throw error;
   }
 };

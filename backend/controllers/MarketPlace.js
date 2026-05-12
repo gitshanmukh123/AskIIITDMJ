@@ -25,7 +25,7 @@ export const createMarketplaceItem = async (req, res) => {
     if (req.files && req.files.length > 0) {
       try {
         for (const file of req.files) {
-          const uploadedUrl = await uploadOnCloudinary(file.path);
+          const uploadedUrl = await uploadOnCloudinary(file);
           if (uploadedUrl) {
             images.push(uploadedUrl)
           }
@@ -194,7 +194,7 @@ export const updateMarketplaceItem = async (req, res) => {
     if (req.files && req.files.length > 0) {
       try {
         for (const file of req.files) {
-          const uploadedUrl = await uploadOnCloudinary(file.path);
+          const uploadedUrl = await uploadOnCloudinary(file);
           if (uploadedUrl) {
             item.images.push(uploadedUrl)
           }
