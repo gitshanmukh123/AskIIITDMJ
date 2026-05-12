@@ -32,6 +32,9 @@ export const analyzeResume = async (req, res) => {
     // Lazy load pdfjs only when needed to avoid Node.js DOM API errors on startup
     const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
     
+    // Disable worker for serverless environment
+    pdfjsLib.GlobalWorkerOptions.workerSrc = null;
+    
     if (!req.file) {
       return res.status(400).json({ message: "Resume required" });
     }
