@@ -16,7 +16,6 @@ const app = express();
 
 // CORS FIRST
 app.use(corsMiddleware);
-app.options("*", corsMiddleware);
 
 // Stripe webhook
 app.post(
