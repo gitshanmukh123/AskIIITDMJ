@@ -51,7 +51,7 @@ export const updateProfile = async (req, res) => {
     // Upload profile image to Cloudinary if provided
     if (req.file) {
       try {
-        console.log("[UPDATE_PROFILE] File info:", { fieldname: req.file.fieldname, originalname: req.file.originalname, path: req.file.path, size: req.file.size });
+        console.log("[UPDATE_PROFILE] File info:", { fieldname: req.file.fieldname, originalname: req.file.originalname, size: req.file.size });
         console.log("[UPDATE_PROFILE] Starting image upload...");
         const cloudinaryResult = await uploadOnCloudinary(req.file);
         updateData.ProfileImage = cloudinaryResult;

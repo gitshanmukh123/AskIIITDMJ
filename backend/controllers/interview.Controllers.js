@@ -1,4 +1,4 @@
-import fs from "fs";
+import pdf from "pdf-parse";
 import { askAi } from "../services/openRouter.services.js";
 import UserModel from "../models/User.Models.js";
 import Interview from "../models/interview.models.js";
@@ -29,12 +29,6 @@ const parseAiJson = (raw) => {
 
 export const analyzeResume = async (req, res) => {
   try {
-    // Lazy load pdfjs only when needed to avoid Node.js DOM API errors on startup
-    const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
-    
-    // Disable worker for serverless environment
-    pdfjsLib.GlobalWorkerOptions.workerSrc = null;
-    
     if (!req.file) {
       return res.status(400).json({ message: "Resume required" });
     }
@@ -44,32 +38,20 @@ export const analyzeResume = async (req, res) => {
       req.file.originalname.toLowerCase().endsWith(".pdf");
 
     if (!isPdf) {
-      if (req.file && fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-      }
       return res.status(400).json({ message: "Only PDF resume is supported" });
     }
 
-    const filePath = req.file.path;
-
-    const fileBuffer = await fs.promises.readFile(filePath);
-    const uint8Array = new Uint8Array(fileBuffer);
-
-    const pdf = await pdfjsLib.getDocument({ data: uint8Array }).promise;
-
-    let resumeText = "";
-
-    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-      const page = await pdf.getPage(pageNum);
-
-      const content = await page.getTextContent();
-
-      const pageText = content.items.map((item) => item.str).join(" ");
-
-      resumeText += pageText + "\n";
+    if (!req.file.buffer) {
+      return res.status(400).json({ message: "Resume file buffer is missing" });
     }
 
+    const data = await pdf(req.file.buffer);
+    let resumeText = data.text || "";
     resumeText = resumeText.replace(/\s+/g, " ").trim();
+
+    if (!resumeText) {
+      return res.status(400).json({ message: "Could not extract text from resume" });
+    }
 
     const messages = [
       {
@@ -97,8 +79,6 @@ Return strictly JSON:
 
     const parsed = parseAiJson(aiResponse);
 
-    fs.unlinkSync(filePath);
-
     res.json({
       role: parsed.role || "",
       experience: parsed.experience || "",
@@ -108,9 +88,6 @@ Return strictly JSON:
       resumeText,
     });
   } catch (error) {
-    if (req.file && fs.existsSync(req.file.path)) {
-      fs.unlinkSync(req.file.path);
-    }
     console.error("Resume Analysis Error:", error);
 
     res.status(500).json({

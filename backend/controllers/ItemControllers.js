@@ -6,7 +6,7 @@ import uploadOnCloudinary from "../config/cloudinary.js";
 export const createItem = async (req, res) => {
   try {
     console.log("[CREATE_ITEM] Request received");
-    console.log("[CREATE_ITEM] req.file:", req.file ? { fieldname: req.file.fieldname, originalname: req.file.originalname, path: req.file.path, size: req.file.size } : "No file");
+    console.log("[CREATE_ITEM] req.file:", req.file ? { fieldname: req.file.fieldname, originalname: req.file.originalname, size: req.file.size } : "No file");
     
     const {
       title,
@@ -150,7 +150,15 @@ export const createClaimRequest = async (req, res) => {
       return res.status(404).json({ message: "Item not found" });
     }
 
-    const itemImage = req.file?.path || "";
+    let itemImage = "";
+    if (req.file) {
+      try {
+        itemImage = await uploadOnCloudinary(req.file);
+      } catch (uploadError) {
+        console.error("Claim image upload error:", uploadError);
+        return res.status(400).json({ message: "Failed to upload claim image" });
+      }
+    }
 
     const claim = await ClaimedModel.create({
       item: item._id,

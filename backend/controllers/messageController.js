@@ -201,7 +201,7 @@ export const getAllUsers = async (req, res) => {
 //     let image = "";
 //     if (req.file) {
 //       try {
-//         image = await uploadOnCloudinary(req.file.path);
+//         image = await uploadOnCloudinary(req.file);
 //       } catch (uploadError) {
 //         console.error("Upload error:", uploadError);
 //         return res.status(400).json({ success: false, msg: "Failed to upload image" });
@@ -413,7 +413,7 @@ export const getAllUsers = async (req, res) => {
 // let image = "";
 //     if (req.file) {
 //       try {
-//         image = await uploadOnCloudinary(req.file.path);
+//         image = await uploadOnCloudinary(req.file);
 //       } catch (uploadError) {
 //         console.error("Upload error:", uploadError);
 //         return res.status(400).json({ success: false, msg: "Failed to upload image" });
