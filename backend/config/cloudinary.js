@@ -5,11 +5,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Ensure public directory exists
+// Ensure public directory exists (non-blocking for serverless environments)
 const publicDir = path.join(process.cwd(), "public");
 if (!fs.existsSync(publicDir)) {
-  fs.mkdirSync(publicDir, { recursive: true });
-  console.log("Created /public directory for multer temp storage");
+  try {
+    fs.mkdirSync(publicDir, { recursive: true });
+    console.log("Created /public directory for multer temp storage");
+  } catch (err) {
+    console.warn("Could not create /public directory (likely serverless environment):", err.message);
+  }
 }
 
 // Configure Cloudinary
